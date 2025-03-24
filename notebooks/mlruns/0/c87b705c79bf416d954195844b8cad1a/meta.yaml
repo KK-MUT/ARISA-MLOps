@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Kinga/OneDrive%20-%20Wojskowa%20Akademia%20Techniczna/Podyplomowe/ARISA-ML-OPS/ARISA-MLOps/notebooks/mlruns/0/c87b705c79bf416d954195844b8cad1a/artifacts
+end_time: 1742843133149
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c87b705c79bf416d954195844b8cad1a
+run_name: masked-eel-595
+run_uuid: c87b705c79bf416d954195844b8cad1a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1742843131807
+status: 3
+tags: []
+user_id: Kinga
