@@ -5,16 +5,17 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from loguru import logger
 import shap
-#import joblib
 import os
-from ARISA_DSML.config import FIGURES_DIR, MODELS_DIR, target, PROCESSED_DATA_DIR, MODEL_NAME #,categorical
+from ARISA_DSML.config import FIGURES_DIR, MODELS_DIR, target, PROCESSED_DATA_DIR, MODEL_NAME
 from ARISA_DSML.resolve import get_model_by_alias
 import mlflow
 from mlflow.client import MlflowClient
 import json
 
 
-def plot_shap(model: CatBoostClassifier, df_plot: pd.DataFrame)->None:
+# import joblib
+
+def plot_shap(model: CatBoostClassifier, df_plot: pd.DataFrame) -> None:
     """Plot model shapley overview plot."""
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(df_plot)
@@ -23,7 +24,7 @@ def plot_shap(model: CatBoostClassifier, df_plot: pd.DataFrame)->None:
     plt.savefig(FIGURES_DIR / "test_shap_overall.png")
 
 
-def predict(model: CatBoostClassifier, df_pred: pd.DataFrame, params: dict) -> str|Path:
+def predict(model: CatBoostClassifier, df_pred: pd.DataFrame, params: dict) -> str | Path:
     """Do predictions on test data."""
     feature_columns = params.pop("feature_columns")
 

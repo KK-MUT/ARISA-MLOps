@@ -25,13 +25,13 @@ from ARISA_DSML.helpers import get_git_commit_hash
 
 # comment to trigger workflow ver4
 
-def run_hyperopt (X_train: pd.DataFrame, y_train: pd.DataFrame, categorical_indices: list[int], test_size: float=0.25, n_trials: int=20, overwrite: bool=False) -> str|Path:  # noqa: PLR0913
+def run_hyperopt(X_train: pd.DataFrame, y_train: pd.DataFrame, categorical_indices: list[int], test_size: float = 0.25, n_trials: int = 20, overwrite: bool = False) -> str | Path:  # noqa: PLR0913
     """Run optuna hyperparameter tuning."""
     best_params_path = MODELS_DIR / "best_params.pkl"
     if not best_params_path.is_file() or overwrite:
         X_train_opt, X_val_opt, y_train_opt, y_val_opt = train_test_split(X_train, y_train, test_size=test_size, random_state=42)
 
-        def objective (trial:optuna.trial.Trial) -> float:
+        def objective(trial: optuna.trial.Trial) -> float:
             with mlflow.start_run(nested=True):
                 params = {
                     "depth": trial.suggest_int("depth", 2, 10),
@@ -73,7 +73,7 @@ def run_hyperopt (X_train: pd.DataFrame, y_train: pd.DataFrame, categorical_indi
     return best_params_path
 
 
-def train_cv (X_train: pd.DataFrame, y_train: pd.DataFrame, categorical_indices: list[int], params:dict, eval_metric: str = "F1", n: int = 5) -> str|Path:  # noqa: PLR0913
+def train_cv(X_train: pd.DataFrame, y_train: pd.DataFrame, categorical_indices: list[int], params: dict, eval_metric: str = "F1", n: int = 5) -> str | Path:  # noqa: PLR0913
     """Do cross-validated training."""
     params["eval_metric"] = eval_metric
     params["loss_function"] = "Logloss"
@@ -97,9 +97,8 @@ def train_cv (X_train: pd.DataFrame, y_train: pd.DataFrame, categorical_indices:
     return cv_output_path
 
 
-def train (X_train: pd.DataFrame, y_train: pd.DataFrame, categorical_indices: list[int],  # noqa: PLR0913
-          params: dict|None, artifact_name: str = "catboost_model_titanic", cv_results = None,
-          ) -> tuple[str|Path]:
+def train(X_train: pd.DataFrame, y_train: pd.DataFrame, categorical_indices: list[int],  # noqa: PLR0913
+          params: dict | None, artifact_name: str = "catboost_model_titanic", cv_results=None) -> tuple[str | Path]:
     """Train model on full dataset without cross-validation."""
     if params is None:
         logger.info("Training model without tuned hyperparameters")
@@ -183,8 +182,7 @@ def plot_error_scatter(  # noqa: PLR0913
         title: str = "",
         xtitle: str = "",
         ytitle: str = "",
-        yaxis_range: list[float]|None=None,
-    ) -> None:
+        yaxis_range: list[float] | None = None) -> None:
     """Plot plotly scatter plots with error areas."""
     # Create figure
     fig = go.Figure()
@@ -202,12 +200,11 @@ def plot_error_scatter(  # noqa: PLR0913
     # Add shaded error region
     fig.add_trace(
         go.Scatter(
-            x = pd.concat([df_plot[y], df_plot[x][::-1]]),
-            y = pd.concat([df_plot[y]+df_plot[err],
-                         df_plot[y]-df_plot[err]]),
-            fill = "toself",
+            x=pd.concat([df_plot[y], df_plot[x][::-1]]),
+            y=pd.concat([df_plot[y] + df_plot[err], df_plot[y] - df_plot[err]]),
+            fill="toself",
             fillcolor="rgba(0, 0, 255, 0.2)",
-            line = {"color":"rgba(255, 255, 255, 0)"},
+            line={"color": "rgba(255, 255, 255, 0)"},
             showlegend=False,
         ),
     )

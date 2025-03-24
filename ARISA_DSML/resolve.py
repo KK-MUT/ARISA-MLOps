@@ -49,4 +49,3 @@ if __name__ == "__main__":
             raise (Exception(challenge_failed_exc))
     elif champ_mv and chall_mv is None:
         logger.info("No challenger to champion, continuing with prediction.")
-        
