@@ -2,8 +2,8 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = ARISA_MLOps
-PYTHON_VERSION = 3.11
+PROJECT_NAME = ARISA-MLOps
+PYTHON_VERSION = 3.11.9
 PYTHON_INTERPRETER = python
 
 #################################################################################
@@ -16,6 +16,9 @@ PYTHON_INTERPRETER = python
 requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
+	
+
+
 
 ## Delete all compiled Python files
 .PHONY: clean
@@ -27,6 +30,8 @@ clean:
 .PHONY: lint
 lint:
 	flake8 ARISA_DSML
+	isort --check --diff --profile black ARISA_DSML
+	black --check --config pyproject.toml ARISA_DSML
 
 ## Format source code with black
 .PHONY: format
@@ -34,13 +39,9 @@ format:
 	black --config pyproject.toml ARISA_DSML
 
 
-.PHONY: preprocess
-preprocess:
-	python -m ARISA_DSML.preproc
 
-.PHONY: train
-train:
-	python -m ARISA_DSML.train
+
+
 
 #################################################################################
 # PROJECT RULES                                                                 #
